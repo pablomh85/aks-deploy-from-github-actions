@@ -4,7 +4,7 @@ IMAGE_REPO := $(ACR_NAME).azurecr.io/upgrade-test
 
 .PHONY: build
 build:
-	docker build -t $(IMAGE_REPO):$(VERSION) .
+	docker buildx build -t $(IMAGE_REPO):$(VERSION) .
 
 .PHONY: registry-login
 registry-login:
