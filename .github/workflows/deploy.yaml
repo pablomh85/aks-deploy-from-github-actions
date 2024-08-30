@@ -47,7 +47,8 @@ jobs:
           CLUSTER_RESOURCE_GROUP_NAME: ${{ secrets.CLUSTER_RESOURCE_GROUP_NAME }}
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
         run: |
-          az aks get-credentials --resource-group $CLUSTER_RESOURCE_GROUP_NAME --name $CLUSTER_NAME --overwrite-existing
+          az aks get-credentials --resource-group "rg-ssib-imssbienestar-qa-aks-01" --name "aks-mxce-qa-aks-01" --overwrite-existing
+    # az aks get-credentials --resource-group $CLUSTER_RESOURCE_GROUP_NAME --name $CLUSTER_NAME --overwrite-existing
       - name: Deploy application
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}
