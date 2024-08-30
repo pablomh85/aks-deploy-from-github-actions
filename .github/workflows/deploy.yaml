@@ -29,9 +29,13 @@ jobs:
         run: make push
       - name: Get AKS credentials
         env:
+          SERVICE_PRINCIPAL_APP_ID: ${{ secrets.SERVICE_PRINCIPAL_APP_ID }}
+          SERVICE_PRINCIPAL_SECRET: ${{ secrets.SERVICE_PRINCIPAL_SECRET }}
+          SERVICE_PRINCIPAL_TENANT: ${{ secrets.SERVICE_PRINCIPAL_TENANT }}
           CLUSTER_RESOURCE_GROUP_NAME: ${{ secrets.CLUSTER_RESOURCE_GROUP_NAME }}
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
         run: |
+          az login --service-principal -u $SERVICE_PRINCIPAL_APP_ID -p SERVICE_PRINCIPAL_SECRET --tenant SERVICE_PRINCIPAL_TENANT
           az aks get-credentials --resource-group $CLUSTER_RESOURCE_GROUP_NAME --name $CLUSTER_NAME --overwrite-existing
       - name: Deploy application
         env:
