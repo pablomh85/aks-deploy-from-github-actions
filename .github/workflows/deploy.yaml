@@ -32,23 +32,22 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
          # enable-AzPSSession: true
-      - name: Azure CLI script
+    #  - name: Azure CLI script
+    #    env:
+    #      CLUSTER_RESOURCE_GROUP_NAME: ${{ secrets.CLUSTER_RESOURCE_GROUP_NAME }}
+    #      CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+    #    uses: azure/cli@v2
+    #    with:
+    #      azcliversion: latest
+    #      inlineScript: |
+    #        az aks get-credentials --resource-group $CLUSTER_RESOURCE_GROUP_NAME --name $CLUSTER_NAME --overwrite-existing
+          # You can write your Azure CLI inline scripts here. 
+      - name: Get AKS credentials
         env:
           CLUSTER_RESOURCE_GROUP_NAME: ${{ secrets.CLUSTER_RESOURCE_GROUP_NAME }}
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az aks get-credentials --resource-group $CLUSTER_RESOURCE_GROUP_NAME --name $CLUSTER_NAME --overwrite-existing
-          # You can write your Azure CLI inline scripts here. 
-     # - name: Get AKS credentials
-     #   env:
-     #     CLUSTER_RESOURCE_GROUP_NAME: ${{ secrets.CLUSTER_RESOURCE_GROUP_NAME }}
-     #     CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
-     #   run: |
-     #     az login --service-principal -u $SERVICE_PRINCIPAL_APP_ID -p SERVICE_PRINCIPAL_SECRET --tenant SERVICE_PRINCIPAL_TENANT
-     #     az aks get-credentials --resource-group $CLUSTER_RESOURCE_GROUP_NAME --name $CLUSTER_NAME --overwrite-existing
+        run: |
+          az aks get-credentials --resource-group $CLUSTER_RESOURCE_GROUP_NAME --name $CLUSTER_NAME --overwrite-existing
       - name: Deploy application
         env:
           ACR_NAME: ${{ secrets.ACR_NAME }}
